@@ -4,6 +4,8 @@ package com.algaworks.brewer.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,7 @@ import com.algaworks.brewer.model.Origem;
 import com.algaworks.brewer.model.Sabor;
 import com.algaworks.brewer.repository.Cervejas;
 import com.algaworks.brewer.repository.Estilos;
+import com.algaworks.brewer.repository.filter.CervejaFilter;
 import com.algaworks.brewer.service.CadastroCervejaService;
 
 
@@ -35,7 +38,6 @@ public class CervejasController {
 	@Autowired
 	private CadastroCervejaService cadastroCervejaService;	
 	
-	//Formulário de cadastro
 	@RequestMapping("/novo")
 	public ModelAndView novo(Cerveja  cerveja) {
 		
@@ -69,13 +71,14 @@ public class CervejasController {
 	}
 	
 	@GetMapping
-	public ModelAndView pesquisar() {
+	public ModelAndView pesquisar(CervejaFilter cervejaFilter, BindingResult result, @PageableDefault(size=2) Pageable pageable) { // o Spring crie esse objeto
 		
 		ModelAndView mv = new ModelAndView("cervejas/pesquisaCervejas");
 		mv.addObject("estilos", estilos.findAll());
 		mv.addObject("sabores", Sabor.values());
-		mv.addObject("origens", Origem.values());		
-		mv.addObject("cervejas",cervejas.findAll());
+		mv.addObject("origens", Origem.values());	
+		
+		mv.addObject("cervejas",cervejas.filtrar(cervejaFilter, pageable));	
 		
 		return mv;
 		

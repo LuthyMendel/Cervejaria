@@ -152,7 +152,12 @@
 							<i class="glyphicon  glyphicon-cloud-upload"></i>
 							<span>Arraste a foto aqui ou </span>
 							<a class="bw-upload-form-file">selecione <input id="upload-select" type="file" accept=".jpg,.jpeg,.png"/></a>
-						</div>						
+						</div>	
+						
+						
+						
+						
+											
 					</div>
 				</div>
 			</div>
@@ -174,36 +179,8 @@
 		<script th:src="@{/javaScript/vendors/uikit.min.js}"></script>
 		<script th:src="@{/javaScript/vendors/upload.min.js}"></script>
 		<script th:src="@{/javaScript/vendors/handlebars.min.js}"></script>
+		<script th:src="@{/javaScript/vendors/cervejas.upload-foto.js}"></script>
 		
-		
-		<script>
-	$(function() {
-		var settings = {
-				
-				type: 'json',
-				filelimit: 1,
-				allow: '*.(jpg|jpeg|png)',
-				action: '/brewer/fotos',
-				
-				complete: function(resposta) {
-					
-					console.log(resposta.nome);
-					$('input[name=foto]').val(resposta.nome);
-					$('input[name=contentType]').val(resposta.contentType);
-
-	
-				
-				}
-		};
-		
-		UIkit.uploadSelect($('#upload-select'), settings);
-		UIkit.uploadDrop($('#upload-drop'), settings);
-		
-	
-		
-	});
-	</script>
-
 	 </th:block>
 </body>
 </html>
