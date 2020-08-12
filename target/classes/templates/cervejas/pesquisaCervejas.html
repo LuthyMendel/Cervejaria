@@ -93,11 +93,29 @@
 		
 				<table class="table table-hover bw-tabela-simples">
 					<thead>
-					<tr>
-					
+					<tr>					
 						<th class="table-cervejas-col-foto"></th>
-						<th class="table-cervejas-col-sku">SKU</th>
-						<th class="table-cervejas-col-nome">Nome</th>
+						
+						<th class="table-cervejas-col-sku">
+						<a th:href="${pagina.urlOrdenada('sku')}" th:remove="${pagina.vazio} ? tag">
+							<span>SKU</span>
+							<span class="droup" th:remove="${pagina.descendente('sku')} ? tag"
+							 th:if="${pagina.ordenada('sku')}">
+							 <span class="caret"></span></span>
+						</a>
+						</th>
+						
+						
+						<th class="table-cervejas-col-nome">
+						<a th:href="${pagina.urlOrdenada('nome')}" th:remove="${pagina.vazio} ? tag">
+							<span>Nome</span>
+							<span class="droup" th:remove="${pagina.descendente('nome')} ? tag"
+							 th:if="${pagina.ordenada('nome')}">
+							 <span class="caret"></span></span>
+						</a>
+						</th>
+						
+						
 						<th class="table-cervejas-col-estilo">Estilo</th>
 						<th class="table-cervejas-col-origem">Origem</th>
 						<th class="table-cervejas-col-valor">Valor</th>
@@ -106,10 +124,9 @@
 					</thead>
 					
 					<tbody>
-						<tr th:each="cerveja : ${cervejas}">
+						<tr th:each="cerveja : ${pagina.conteudo}">
 						<td class="text-center">
-						<img th:src="@{/fotos/thumbnail.{foto}(foto=${cerveja.fotoOuMock})}" class="img-responsive"/>
-						                      
+						<img th:src="@{/fotos/thumbnail.{foto}(foto=${cerveja.fotoOuMock})}" class="img-responsive"/>	                      
 						
 						                 
 							<td class="text-center" th:text="${cerveja.sku}"><td>
@@ -126,7 +143,7 @@
 							</a>
 							<td>			
 						</tr>
-						<tr th:if="${#lists.isEmpty(cervejas)}">
+						<tr th:if="${pagina.vazio}">
 						
 							<td colspan="7"> Nenhuma cerveja Encontrada</td>
 						</tr>
@@ -135,23 +152,28 @@
 				</table>
 	</div>
 	
-	<div class="col-sm-12 text-center">
+	<div class="col-sm-12 text-center" th:if="${not pagina.vazio}">
 	
 		<nav>
-			  <ul class="pagination pagination-sm">
-			    <li> <a href="#"><span>&laquo;</span></a></li>
-			  
-			    <li class="active"> <a href="?page=0">1</a></li>
-			    <li> <a href="?page=1">2</a></li>
-			    <li> <a href="?page=2">3</a></li>
-			    <li> <a href="?page=3"><span>&raquo;</span></a></li>
+			  <ul class="pagination pagination-sm" th:with="paginaAtual=${pagina.atual}">
+			    <li th:class="${pagina.primeiro} ? disabled"> 
+			    					 
+			    <a th:href="${pagina.urlParaPagina(paginaAtual -1)}" th:remove="${pagina.primeiro} ? tag"><span>&laquo;</span></a>
 			    
+			    </li>	
+	
+			<th:block th:each="p :${#numbers.sequence(1,pagina.total)}" th:with="numeroPagina=${p -1}">
+			
+			    <li th:class="${paginaAtual == numeroPagina} ? active"> 
+			    <a th:href="${pagina.urlParaPagina(numeroPagina)}">[[${p}]]</a>
+			    </li>
+			</th:block>		  
 			    
+			    <li th:class="${pagina.ultima} ? disabled"> 
+			    <a th:href="${pagina.urlParaPagina(paginaAtual +1)}" th:remove="${pagina.ultima} ? tag"><span>&raquo;</span></a>
+			    </li>
 			  </ul>
-		</nav>
-	
-
-	
+		</nav>	
 	</div>
 </section>
 </body>
