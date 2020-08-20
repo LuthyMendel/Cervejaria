@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/199/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/layoutPadrao'"
+	xmlns:brewer="http://brewer.algaworks.com"	>
+<head>
+<body>
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-10">
+						<h1>Pesquisa Estilo</h1>					
+					</div>
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-default" th:href="@{/estilo/novo}">
+								<i class="glyphicon glyphicon-plus-sign"></i><span class="hidden-xs hidden-sm"> Novo Estilo</span>
+							</a>
+						</div>					
+					</div>				
+				</div>				
+			</div>
+		</div>		
+		<div class="container-fluid">
+	
+			<form method="GET" th:object="${estiloFilter}">					
+			<div class="row">
+					
+					<div class="col-sm-3  form-group">						
+						<label for="nome" class="control-label">Nome</label>
+						<input id="nome" type="text" class="form-control" th:field="*{nome}" autofocus="autofocus"/>						
+					</div>					
+					<button class="btn  btn-primary" type="submit">Pesquisar</button>
+			</div>					
+		</form>
+		</div>		
+		<div class="table-responsive">
+		
+<table class="table table-hover bw-tabela-simples">
+	<thead>
+		<tr>					
+						
+			<th class="table-estilo-col-nome">		
+			
+				<!-- <th:block th:replace="fragments/ordenacao :: order (${pagina}, 'nome', 'Nome')"></th:block> -->	
+				
+				<brewer:order page="${pagina}" field="nome" text="Nome"/>		  
+			  
+			  	</th>
+
+			<th class="table-estilo-col-acoes">Ações</th>								
+		
+		
+		
+		</tr>
+	</thead>					
+	<tbody>
+					
+		<tr th:each="estilo : ${pagina.conteudo}">						
+	             
+			<td class="text-cente" th:text="${estilo.nome}"> <td>
+									
+			<td class="text-center">
+				<a class="btn btn-link btn-xs" title="Editar">
+					<i class="glyphicon glyphicon-pencil"></i>
+				</a>
+							<a class="btn btn-link btn-xs" title="Excluir">
+								<i class="glyphicon glyphicon-pencil"></i>
+							</a>
+							<td>			
+						</tr>						
+					</tbody>		
+				</table>
+				
+				<div class="alert alert-danger alert-dismissible" role="alert" th:if="${pagina.vazio}">
+			
+					<span> Nenhum Estilo Encontrada</span>			
+				</div>
+				
+				<div class="col-sm-12 text-center" th:if="${not pagina.vazio}">
+				<nav>
+					  <ul class="pagination pagination-sm" th:with="paginaAtual=${pagina.atual}">		
+					  			  
+					    <li th:class="${pagina.primeiro} ? disabled">
+					    
+					    <a th:href="${pagina.urlParaPagina(paginaAtual -1)}" th:remove="${pagina.primeiro} ? tag"><span>&laquo;</span></a></li>					    
+					    
+					    <th:block th:each="p : ${#numbers.sequence(1, pagina.total)}" th:with="numeroPagina=${p -1}">
+					    
+								   <li th:class="${paginaAtual == numeroPagina} ? active">
+								    <a  th:href="${pagina.urlParaPagina(numeroPagina)}">[[${p}]]</a>
+						</li>					    
+					    </th:block>					    
+					    
+					    <li th:class="${pagina.ultima} ? disabled">
+					    <a  th:href="${pagina.urlParaPagina(paginaAtual +1)}" th:remove="${pagina.ultima} ? tag"><span>&raquo;</span></a></li>
+					    
+					  </ul>
+				</nav>
+	</div>	
+</section>
+</body>
+</html>
