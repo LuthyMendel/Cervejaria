@@ -60,6 +60,7 @@
 .bw-tabela-simples table tr th{
 	
 	border-bottom: 1px;
+	border-top: 18px;
 }
 
 .bw-table-simples table tr td{	
@@ -105,5 +106,12 @@
 
 .table-cervejas-col-acoes {
 	width: 80px;
+}
+
+.table-estilo-col-nome {
+	min-width: 90px;
+	width: 200px;
+	text-align: center;
+
 }
 

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -20,7 +19,13 @@ public class PageWrapper<T> {
 	
 	public PageWrapper(Page<T> page, HttpServletRequest httpServletRequest) {
 		this.page = page;
-		this.uriBuilder = ServletUriComponentsBuilder.fromRequest(httpServletRequest);
+		//this.uriBuilder = ServletUriComponentsBuilder.fromRequest(httpServletRequest);
+		
+		String httpUrl = httpServletRequest.getRequestURL().append(
+				httpServletRequest.getQueryString()!= null ? "?" + httpServletRequest.getQueryString(): "")
+				.toString().replaceAll("\\+", "%20");
+		
+		this.uriBuilder = UriComponentsBuilder.fromHttpUrl(httpUrl);
 	}
 	
 	public List<T> getConteudo(){
@@ -62,7 +67,8 @@ public class PageWrapper<T> {
 	
 	public String urlOrdenada(String propriedade) {
 		
-		UriComponentsBuilder uriBuilderOrder = UriComponentsBuilder.fromUriString(uriBuilder.build(true).encode().toUriString());
+		UriComponentsBuilder uriBuilderOrder = UriComponentsBuilder
+				.fromUriString(uriBuilder.build(true).encode().toUriString());
 		
 		String valorSort = String.format("%s,%s", propriedade, inverterDirecao(propriedade));
 		
@@ -99,6 +105,14 @@ public class PageWrapper<T> {
 		return page.getSort().getOrderFor(propriedade) != null ? true:false;
 
 	}
+	
+	public String urlOrdenado(String propriedade) {
+		UriComponentsBuilder uriBuilderOrder = UriComponentsBuilder.fromUriString(uriBuilder.build(true).encode().toString());
+		
+		return uriBuilderOrder.replaceQueryParam("sort",propriedade).build(true).encode().toUriString();
+	}
+	
+	
 	
 }
 
