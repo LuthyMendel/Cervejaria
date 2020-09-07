@@ -1,4 +1,4 @@
-package com.algaworks.brewer.repository.helper.estilo;
+package com.algaworks.brewer.repository.helper;
 
 
 import org.springframework.data.domain.Page;

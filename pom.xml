@@ -48,6 +48,18 @@
 		<!-- thumbnailator - Gerar Thumbnail -->
 		<!-- https://github.com/coobird/thubnailator -->
 		<thumbnailator.version>0.4.8</thumbnailator.version>
+		
+		<!-- Thymeleaf  extras data Attribute-->
+		<thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
+		
+		<!-- Cache Guava  -->
+		<guava.version>19.0</guava.version>
+		
+		<!-- Apache Bean Utils -->
+		<commons-beanutils.version>1.9.2</commons-beanutils.version>
+		<!-- Spting Security -->
+		<spring-security-web-version>4.1.1.RELEASE</spring-security-web-version>
+	
 	</properties>
 
 	<build>
@@ -202,18 +214,46 @@
 			<version>${thumbnailator.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		
+		<!-- Thymeleaf  extras data Attribute-->
+		<dependency>
+			<groupId>com.github.mxab.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-data-attribute</artifactId>
+			<version>${thymeleaf-extras-data-attribute.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Cache Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Spring Context Supporte -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Apache Bean Utils -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${commons-beanutils.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security-web-version}</version>
+			<scope>compile</scope>
+		</dependency>
 	
 	</dependencies>
 	
-	<repositories>
-		<repository>
-			<id>sonatype-nexus-snapshots</id>
-    		<name>Sonatype Nexus Snapshots</name>
-    		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    		<snapshots>
-      			<enabled>true</enabled>
-    		</snapshots>
-		</repository>
-	</repositories>
 
 </project>

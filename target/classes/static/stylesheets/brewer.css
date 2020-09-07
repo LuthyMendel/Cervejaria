@@ -5,7 +5,7 @@
 }
 
 
-
+/*Field Action*/
 .bw-field-action{
 	
 	display: flex;
@@ -115,3 +115,19 @@
 
 }
 
+.table-clientes-col-cidade-estado{
+	
+	width: 140px;
+	text-align: right;
+}
+
+/*
+###################
+# CUSTOMIZAÇÃO DE COMPONENTES
+###################
+*/
+.checkbox input[type="checkbox"]:checked+ input + label::after{
+	
+	font-family:'FontAwesome';
+	content:"\f00c";
+}

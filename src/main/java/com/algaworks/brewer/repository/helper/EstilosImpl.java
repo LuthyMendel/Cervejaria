@@ -22,7 +22,6 @@ import org.springframework.util.StringUtils;
 import com.algaworks.brewer.model.Cerveja;
 import com.algaworks.brewer.model.Estilo;
 import com.algaworks.brewer.repository.filter.EstiloFilter;
-import com.algaworks.brewer.repository.helper.estilo.EstiloQueries;
 import com.algaworks.brewer.repository.paginacao.PaginacaoUtil;
 
 public class EstilosImpl implements EstiloQueries {
