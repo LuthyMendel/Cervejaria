@@ -1,0 +1,2 @@
+INSERT INTO usuario(nome,email,senha,ativo) values('admin','admin@','$2a$10$zBzpfAL5EhR/5LzKKcQWpOq3YavQPsIW750MSRbBYONk432BD9MCG
+');

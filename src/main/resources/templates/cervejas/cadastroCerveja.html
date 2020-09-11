@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/199/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/layoutPadrao'"
+	layout:decorator="'layout/LayoutPadrao'"
 	xmlns:brewer="http://brewer.algaworks.com"	>
 <head>
 	<title>Cadastro Cerveja</title>
@@ -40,7 +40,9 @@
 		<div class="container-fluid">		
 								
 			
-		<form method="POST" th:object="${cerveja}" class="form-vertical  js-form-loading">	
+		<form method="POST" th:object="${cerveja}" class="form-vertical  js-form-loading"
+		
+		th:action="@{/cervejas/novo}">	
 					
 					<brewer:message/>
 	
@@ -172,7 +174,7 @@
 
 	<th:block layout:fragment="javascript-extra">
 	
-		<script th:src="@{/javaScript/estilo.cadastro-rapido.js}"></script>		
+		<script th:src="@{/javaScript/vendors/estilo.cadastro-rapido.js}"></script>		
 		<script th:src="@{/javaScript/vendors/uikit.min.js}"></script>
 		<script th:src="@{/javaScript/vendors/upload.min.js}"></script>
 		<script th:src="@{/javaScript/vendors/handlebars.min.js}"></script>

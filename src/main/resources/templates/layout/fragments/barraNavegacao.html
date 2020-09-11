@@ -17,10 +17,10 @@
 		</div>		
 		<ul class="nav navbar-nav  navbar-right">			    
 			<li>
-			     <a href="#" class="js-search-modal-trigger-show"><i class="fa  fa-search"></i></a>
+			     <p class="navbar-text" th:text="${#authentication.principal.usuario.nome}">Usuário</p>
 			</li>		
 			<li>
-			     <a href="#"><em class="fa  fa-sign-out"></em></a>
+			     <a th:href="@{/logout}"><em class="fa  fa-sign-out"></em></a>
 			</li> 
 		</ul>		
 	</div>

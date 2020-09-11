@@ -2,13 +2,18 @@ package com.algaworks.brewer.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,9 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.algaworks.brewer.controller.page.PageWrapper;
 import com.algaworks.brewer.model.Cidade;
+import com.algaworks.brewer.model.Cliente;
+import com.algaworks.brewer.model.TipoPessoa;
 import com.algaworks.brewer.repository.Cidades;
+import com.algaworks.brewer.repository.Clientes;
 import com.algaworks.brewer.repository.Estados;
+import com.algaworks.brewer.repository.filter.CidadeFilter;
+import com.algaworks.brewer.repository.filter.ClienteFilter;
 import com.algaworks.brewer.service.CadastrarCidadeService;
 import com.algaworks.brewer.service.exception.NomeCidadeJaCadastradaException;
 
@@ -32,12 +43,14 @@ public class CidadesController {
 	@Autowired
 	private CadastrarCidadeService cadastroCidadeService;
 	
+	@Autowired
+	private Clientes clientes;
+	
 	
 	@Autowired
 	private Estados estados;
 
 	@RequestMapping("/nova")
-	@CacheEvict(value="cidades",key="#cidade.estado.codigo", condition = "#Cidade.temEstado()") //nome do cach
 	public ModelAndView nova(Cidade cidade) {
 		
 		ModelAndView mv = new ModelAndView("cidade/cadastroCidade");
@@ -46,9 +59,9 @@ public class CidadesController {
 		return mv;
 	}
 	
-	
-	@Cacheable(value ="cidades", key="#codigoEstado") //nome do cache
-	@RequestMapping(consumes = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+	@Cacheable(value ="cidades",  key = "#codigoEstado") //nome do cache
+	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+
 	public @ResponseBody List<Cidade> pesquisarPorCodigoEstado(
 			@RequestParam(name="estado", defaultValue = "-1")Long codigoEstado){
 		
@@ -64,7 +77,6 @@ public class CidadesController {
 	@PostMapping("/nova")
 	public ModelAndView salvar(@Valid Cidade cidade, BindingResult result, RedirectAttributes attributes) {
 		
-		System.out.println("-->>>"+cidade.getEstado());
 		
 		if(result.hasErrors()) {
 			
@@ -85,6 +97,18 @@ public class CidadesController {
 		attributes.addFlashAttribute("messagem", "Cidade Salva Com Sucesso !");
 		return new ModelAndView("redirect:/cidades/nova");
 		
+	}
+	
+	@GetMapping
+	public ModelAndView pesquisar(CidadeFilter cidadeFilter, BindingResult result
+			, @PageableDefault(size = 10) Pageable pageable, HttpServletRequest httpServletRequest) {
+		ModelAndView mv = new ModelAndView("cidade/PesquisaCidades");
+		mv.addObject("estados", estados.findAll());
+		
+		PageWrapper<Cidade> paginaWrapper = new PageWrapper<>(cidades.filtrar(cidadeFilter, pageable)
+				, httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
+		return mv;
 	}
 	
 }
