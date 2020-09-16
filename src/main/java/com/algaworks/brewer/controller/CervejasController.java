@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -58,7 +57,9 @@ public class CervejasController {
 	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result,
 							Model model, RedirectAttributes attributes) {				
 		if(result.hasErrors()) {
-			return novo(cerveja);			
+			//return novo(cerveja);		
+			
+			throw new RuntimeException();
 		}		
 		 
 		cadastroCervejaService.salvar(cerveja);

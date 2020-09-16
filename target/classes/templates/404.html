@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt"
+	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="~{layout/layoutSimples}">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>Brewer</title>
+</head>
+<th:block layout:fragment="conteudo">
+
+  <div class="aw-layout-simple-page__container">
+	
+	<div class="aw-error-panel">
+		<h1 class="aw-error-panel__code">
+			<i class="fa  fa-location-arrow"></i> 404
+		</h1>
+		
+		<h2 class="aw-error-panel__title">Página não encontrada</h2>
+		
+		<div class="aw-error-panel__description">
+			Desculpe, a página que você tentou acessar não foi encontrada ou não existe.
+			
+			<br/><br/>
+			<a href="javascript:history.back()" class="btn  btn-primary">Voltar para onde estava</a>
+		</div>
+	</div>
+</div>
+</th:block>
+</html>

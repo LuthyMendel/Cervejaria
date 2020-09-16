@@ -70,6 +70,15 @@
 	vertical-align: middle;
 	
 }
+
+/*
+	Coluna pesquisa de usuários
+*/
+
+.table-usuarios-col-status{
+	
+	width: 30px;
+}
 /*
 ###################
 # PÁGINAS DO SISTEMA
@@ -119,6 +128,18 @@
 	
 	width: 140px;
 	text-align: right;
+}
+
+.bw-tabela-cervejas__vazio{
+	padding: 15px 15px;
+	
+	border: 1px dashed #ddd;
+	
+	text-align:  center;
+	font-size: 1.2em;
+	font-weight: 300;
+	color: #555;
+	
 }
 
 /*

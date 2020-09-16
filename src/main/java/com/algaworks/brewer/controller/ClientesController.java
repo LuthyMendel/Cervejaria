@@ -10,13 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -102,4 +107,28 @@ public class ClientesController {
 
 	}
 	
+	@RequestMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+	public @ResponseBody List<Cliente> pesquisar(String nome){	
+		
+		//erro será tratado no javaScript
+		validarTamanhoNome(nome);		
+		
+		return  clientes.findByNomeStartingWithIgnoreCase(nome);
+	}
+
+	private void validarTamanhoNome(String nome) {
+		if(StringUtils.isEmpty(nome) || nome.length() <3) {
+			
+			
+			throw new IllegalArgumentException();
+		}
+		
+		
+	}
+	
+	@ExceptionHandler(IllegalArgumentException.class )
+	public ResponseEntity<Void> tratarIllegalException(IllegalArgumentException e){
+		
+		return ResponseEntity.badRequest().build();
+	}
 }
