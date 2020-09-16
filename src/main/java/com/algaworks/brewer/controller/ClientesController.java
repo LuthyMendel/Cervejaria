@@ -60,11 +60,9 @@ public class ClientesController {
 	@RequestMapping("/novo")
 	public ModelAndView novo(Cliente cliente) {
 		
-		ModelAndView mv = new ModelAndView("cliente/cadastroCliente");
-		
+		ModelAndView mv = new ModelAndView("cliente/cadastroCliente");		
 		mv.addObject("tiposPessoa", TipoPessoa.values());
-		mv.addObject("estados", estados.findAll());
-		
+		mv.addObject("estados", estados.findAll());		
 		return  mv;
 	}
 	
@@ -109,6 +107,7 @@ public class ClientesController {
 	
 	@RequestMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
 	public @ResponseBody List<Cliente> pesquisar(String nome){	
+		System.out.println("METODOOO");
 		
 		//erro será tratado no javaScript
 		validarTamanhoNome(nome);		
