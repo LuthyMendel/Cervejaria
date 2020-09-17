@@ -7,6 +7,10 @@
 
 <head>
 	<title>Cadastro de venda</title>
+	
+		<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.min.css}"/>
+		<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.themes.min.css}"/>
+	
 </head>
 
 <section layout:fragment="conteudo">
@@ -16,6 +20,8 @@
 			<div class="row">
 				<div class="col-xs-10">
 					<h1>Cadastro de venda</h1>
+					
+					
 				</div>
 			</div>
 		</div>
@@ -63,6 +69,8 @@
 					<label class="control-label" for="nomeCliente">Cliente</label>
 					<div class="input-group">
 				      <input id="nomeCliente" type="text" readonly="readonly" class="form-control" placeholder="Clique na lupa para pesquisar o cliente"/>
+				      <input id="codigoCliente" type="hidden"/>
+				      
 				      <span class="input-group-btn">
 				        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa avançada"
 				        		data-toggle="modal" data-target="#pesquisaRapidaClientes" >
@@ -104,12 +112,38 @@
 
 					<div class="row">
 						<div class="form-group  col-lg-12">
-							<input type="text" class="form-control" id="cerveja" 
+							<input type="text" class="form-control js-sku-nome-cerveja-input" id="cerveja" 
 								placeholder="Pesquise e adicione a cerveja pelo SKU ou nome" autofocus="autofocus" />
 						</div>
 					</div>
 					
 					<div class="bw-tabela-cervejas">
+					<!-- Inicio -->
+							<div class="bw-tabela-item">
+								
+								<div class="bw-tabela-item__coluna bw-tabela-item__coluna--foto">
+									<img th:src="@{/fotos/thumbnail.cerveja-mock.png}" class="img-responsive" />								
+								</div>
+								<div class="bw-tabela-item__coluna bw-tabela-item__coluna-detalhes">
+									<span class="bw-tabela-cerveja-nome">Negra Modelo Long Neck 255ml</span>
+									<span class="label label-default">AA112</span>		
+									<span class="bw-tabela-cerveja-origem">Importada</span>				
+													
+								</div>
+								<div class="bw-tabela-item__coluna bw-tabela-item__coluna--valores">
+									<div class="bw-table-cerveja-valor-pequeno">
+										<input type="text"  maxlength="3" class="bw-tabela-cerveja-campo-quantidade" value="1" />
+										<span>x R$8,90</span>									
+									</div>
+									<div class="bw-tabela-cerveja-valor-grande">R$8,90</div>
+								
+								
+								</div>
+							
+								
+							</div>
+					
+					<!-- FIM -->
 						<div class="bw-tabela-cervejas__vazio">
 							<i class="glyphicon  glyphicon-shopping-cart"></i> 
 							<span>Você ainda não adicionou nenhuma cerveja.</span>
@@ -158,15 +192,19 @@
 			</div>
 		</form>
 	</div>
-					    <th:block th:replace="cliente/PesquisaRapidaClientes :: pesquisaRapidaClientes"></th:block>
+		<th:block th:replace="cliente/PesquisaRapidaClientes :: pesquisaRapidaClientes"></th:block>
+		<th:block th:replace="hbd/TemplateAutoCompliteCerveja"></th:block>
+		
 	
 </section>
 
 <th:block layout:fragment="javascript-extra">
 
+		<script th:src="@{/javaScript/vendors/jquery.easy-autocomplete.min.js}"></script>	
 		<script th:src="@{/javaScript/vendors/handlebars.min.js}"></script>	
 		<script th:src="@{/javaScript/cliente.pesquisa-rapida.js}"></script>
-	
+		<script th:src="@{/javaScript/venda.autocomplete-itens.js}"></script>	
+
 <script>
 $(function() {
 	$('.js-abas-venda a').click(function (e) {
