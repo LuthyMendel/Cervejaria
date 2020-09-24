@@ -44,15 +44,14 @@ public class VendasController {
 	}
 	
 	@PutMapping("/item/{codigoCerveja}")
-	public ModelAndView alterarQuantidadeCerveja(@PathVariable Long codigoCerveja, Integer quantidade, @PathVariable String uuid) {
-		Cerveja cerveja = cervejas.findOne(codigoCerveja);
+	public ModelAndView alterarQuantidadeCerveja(@PathVariable("codigoCerveja") Cerveja cerveja, Integer quantidade, String uuid) {
+		
 		tabelaItens.alterarQuantidadeItens(uuid, cerveja, quantidade);
 		return mvTabelasItensVenda(uuid);
 	}
 	
 	@DeleteMapping("/item/{uuid}/{codigoCerveja}")
 	public ModelAndView excluirItem(@PathVariable("codigoCerveja") Cerveja cerveja, @PathVariable String uuid) {
-		System.out.println("DELTANDO");
 		tabelaItens.excluirItem(uuid, cerveja);
 		
 		return mvTabelasItensVenda(uuid);

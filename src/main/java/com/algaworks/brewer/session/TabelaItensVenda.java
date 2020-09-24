@@ -49,6 +49,7 @@ class TabelaItensVenda {
 	
 	public void alterarQuantidadeItens(Cerveja cerveja, Integer quantidade) {
 		ItemVenda itemVenda = buscarItemPorCerveja(cerveja).get();
+		System.out.println("-->>"+quantidade);
 		itemVenda.setQuantidade(quantidade);
 	}
 	

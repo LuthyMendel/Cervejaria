@@ -4,14 +4,12 @@ Brewer.TabelaItens = (function(){
 			this.autocomplete = autocomplete;
 			this.tabelaCervejasContainer = $('.js-tabela-cervejas-container');	
 			this.uuid = $('#uuid').val();		
-		}
-		
+		}		
 		TabelaItens.prototype.iniciar = function(){
 			this.autocomplete.on('item-selecionado', onItemSelecionado.bind(this));			
 		}
 		
-		function onItemSelecionado(evento,item){
-			
+		function onItemSelecionado(evento,item){			
 			var resposta =  $.ajax({				
 				url :'item',
 				method:'POST',
@@ -34,8 +32,7 @@ Brewer.TabelaItens = (function(){
 			
 			var input = $(evento.target);
 			var quantidade = input.val();
-			var codigoCerveja = input.data('codigo-cerveja');
-			
+			var codigoCerveja = input.data('codigo-cerveja');			
 			var resposta = $.ajax({
 				url: 'item/'+codigoCerveja,
 				method: 'PUT',
@@ -45,13 +42,11 @@ Brewer.TabelaItens = (function(){
 				}
 			});
 			
-			resposta.done(onItemAdicionadoNoServidor.bind(this));			
-			
+			resposta.done(onItemAdicionadoNoServidor.bind(this));				
 		}
 		
 		 function onDoubleClick(evento){
 			$(this).toggleClass('solicitando-exclusao');
-
 		}
 		function onExclusaoItemClick(evento){
 			var codigoCerveja = $(evento.target).data('codigo-cerveja');			
