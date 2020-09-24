@@ -1,4 +1,4 @@
-package com.algaworks.brewer.venda;
+package com.algaworks.brewer.session;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.algaworks.brewer.model.Cerveja;
+import com.algaworks.brewer.session.TabelaItensSession;
 import com.algaworks.brewer.session.TabelaItensVenda;
 
 public class TabelaItensVendaTest {
@@ -16,7 +17,7 @@ public class TabelaItensVendaTest {
 	
 	@Before
 	public void setUp() {
-		this.tabelaItensVenda = new TabelaItensVenda();
+		this.tabelaItensVenda = new TabelaItensVenda("1");
 	}
 	
 	@Test
