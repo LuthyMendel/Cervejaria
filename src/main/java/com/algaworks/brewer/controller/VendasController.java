@@ -60,6 +60,7 @@ public class VendasController {
 	private ModelAndView mvTabelasItensVenda(String uuid) {
 		ModelAndView mv = new ModelAndView("venda/tabelaItensVenda");
 		mv.addObject("itens", tabelaItens.getItens(uuid));
+		mv.addObject("valorTotal", tabelaItens.getValorTotal(uuid));
 		return mv;
 	}
 }
