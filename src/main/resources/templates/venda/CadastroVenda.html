@@ -9,9 +9,8 @@
 <head>
 	<title>Cadastro de venda</title>
 	
-		<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.min.css}"/>
-		<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.themes.min.css}"/>
-	
+	<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.min.css}"/>
+	<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.themes.min.css}"/>
 </head>
 
 <section layout:fragment="conteudo">
@@ -21,8 +20,6 @@
 			<div class="row">
 				<div class="col-xs-10">
 					<h1>Cadastro de venda</h1>
-					
-					
 				</div>
 			</div>
 		</div>
@@ -30,10 +27,10 @@
 	
 	<div class="container-fluid">
 		<form method="POST" th:action="@{/vendas/nova}">
-		<input type="hidden" id="uuid" th:value="${uuid}"/> 
+			<input type="hidden" id="uuid" th:value="${uuid}"/>
 			
 			<div class="row">
-				<div class="col-sm-4">
+				<div class="col-sm-4 js-valor-total-box-container">
 					<div class="aw-box">
 						<div class="aw-box__icon">
 							<i class="fa  fa-usd  fa-3x"></i>
@@ -72,7 +69,6 @@
 					<div class="input-group">
 				      <input id="nomeCliente" type="text" readonly="readonly" class="form-control" placeholder="Clique na lupa para pesquisar o cliente"/>
 				      <input id="codigoCliente" type="hidden"/>
-				      
 				      <span class="input-group-btn">
 				        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa avançada"
 				        		data-toggle="modal" data-target="#pesquisaRapidaClientes" >
@@ -80,7 +76,6 @@
 				        </button>
 				      </span>
 				    </div>
-				    
 				</div>
 				
 				<div class="form-group  col-sm-4">
@@ -114,21 +109,18 @@
 
 					<div class="row">
 						<div class="form-group  col-lg-12">
-							<input type="text" class="form-control js-sku-nome-cerveja-input" id="cerveja" 
-								placeholder="Pesquise e adicione a cerveja pelo SKU ou nome" autofocus="autofocus" 								
+							<input type="text" class="form-control  js-sku-nome-cerveja-input" id="cerveja" 
+								placeholder="Pesquise e adicione a cerveja pelo SKU ou nome" autofocus="autofocus" 
 								data:url="@{/cervejas}"/>
 						</div>
 					</div>
 					
-					<div class="bw-tabela-cervejas js-tabela-cervejas-container">				
-					
+					<div class="bw-tabela-cervejas  js-tabela-cervejas-container">
 						<div class="bw-tabela-cervejas__vazio">
 							<i class="glyphicon  glyphicon-shopping-cart"></i> 
 							<span>Você ainda não adicionou nenhuma cerveja.</span>
 						</div>
 					</div>
-					
-					
 				</div>
 				
 				<div class="tab-pane" id="entrega">
