@@ -141,7 +141,10 @@
 	color: #555;
 	
 }
-
+/* Box */
+.negativo .aw-box__value {
+	color: red;
+}
 /*
 ###################
 # CUSTOMIZAÇÃO DE COMPONENTES

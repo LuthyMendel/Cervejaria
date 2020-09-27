@@ -126,7 +126,11 @@ private ApplicationContext applicationContext;
 		
 		//API Datas do Java 8
 		DateTimeFormatterRegistrar dateTimeFormatterRegistrar = new DateTimeFormatterRegistrar();
+		
 		dateTimeFormatterRegistrar.setDateFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		dateTimeFormatterRegistrar.setTimeFormatter(DateTimeFormatter.ofPattern("HH:mm"));
+
+
 		dateTimeFormatterRegistrar.registerFormatters(conversionService);
 	
 		return conversionService;
