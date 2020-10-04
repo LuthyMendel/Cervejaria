@@ -32,18 +32,24 @@ public class VendaFilter {
 	public void setStatus(StatusVenda status) {
 		this.status = status;
 	}
+	
+	
 	public LocalDate getDesde() {
 		return deste;
 	}
-	public void setDeste(LocalDate deste) {
-		this.deste = deste;
+
+	public void setDesde(LocalDate desde) {
+		this.deste = desde;
 	}
+
 	public LocalDate getAte() {
 		return ate;
 	}
+
 	public void setAte(LocalDate ate) {
 		this.ate = ate;
 	}
+	
 	public BigDecimal getValorMinimo() {
 		return valorMinimo;
 	}
