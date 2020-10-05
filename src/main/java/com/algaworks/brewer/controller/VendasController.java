@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.algaworks.brewer.controller.page.PageWrapper;
 import com.algaworks.brewer.controller.valida.VendaValidador;
+import com.algaworks.brewer.mail.Mailer;
 import com.algaworks.brewer.model.Cerveja;
 import com.algaworks.brewer.model.StatusVenda;
 import com.algaworks.brewer.model.TipoPessoa;
@@ -53,6 +54,9 @@ public class VendasController {
 	
 	@Autowired
 	private Vendas vendas;
+	
+	@Autowired
+	private Mailer mailer;
 	
 	@InitBinder("venda")
 	public void inicializarValidator(WebDataBinder binder) {
@@ -105,6 +109,7 @@ public class VendasController {
 			return nova(venda);
 		}	
 		
+		mailer.enviar(venda);
 		
 		venda.setUsuario(usuarioSistema.getUsuario());
 		
@@ -127,6 +132,7 @@ public class VendasController {
 		
 		
 		venda.setUsuario(usuarioSistema.getUsuario());
+		
 		
 		cadastroVendaService.emitir(venda);
 		attributes.addFlashAttribute("mensagem", "Venda Emitida com Sucesso");		
@@ -177,6 +183,7 @@ public class VendasController {
 		mv.addObject("valorTotal", tabelaItens.getValorTotal(uuid));
 		return mv;
 	}
+	
 	private void validarVenda(Venda venda, BindingResult result) {
 		venda.adicionarItens(tabelaItens.getItens(venda.getUuid()));
 		venda.calcularValorTotal();

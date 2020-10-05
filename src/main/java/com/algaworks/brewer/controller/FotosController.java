@@ -46,6 +46,8 @@ public class FotosController {
 	@GetMapping("/{nome:.*}")
 	public byte[] recuperar(@PathVariable String nome) {	
 				
+		
+		System.out.println("--->>>"+fotoStorage.recuperar(nome));
 		return fotoStorage.recuperar(nome);
 	}
 

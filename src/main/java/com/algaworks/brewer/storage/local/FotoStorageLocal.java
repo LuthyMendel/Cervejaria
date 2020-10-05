@@ -26,16 +26,14 @@ private static final Logger logger = LoggerFactory.getLogger(FotoStorageLocal.cl
 	private Path localTemporario;
 	
 	public FotoStorageLocal() {
-		this( getDefault().getPath(System.getenv("HOME"), ".brewerfotos"));
-		
+		this(getDefault().getPath(System.getenv("HOME"), ".brewerfotos"));
 	}
-	
 	
 	public FotoStorageLocal(Path path) {
 		this.local = path;
 		criarPastas();
 	}
-	
+
 	@Override
 	public String salvarTemporariamente(MultipartFile[] files) {
 		String novoNome = null;
@@ -43,17 +41,48 @@ private static final Logger logger = LoggerFactory.getLogger(FotoStorageLocal.cl
 			MultipartFile arquivo = files[0];
 			novoNome = renomearArquivo(arquivo.getOriginalFilename());
 			try {
-				
 				arquivo.transferTo(new File(this.localTemporario.toAbsolutePath().toString() + getDefault().getSeparator() + novoNome));
 			} catch (IOException e) {
 				throw new RuntimeException("Erro salvando a foto na pasta temporária", e);
 			}
 		}
 		
-		
 		return novoNome;
 	}
 	
+	@Override
+	public byte[] recuperarFotoTemporaria(String nome) {
+		try {
+			return Files.readAllBytes(this.localTemporario.resolve(nome));
+		} catch (IOException e) {
+			throw new RuntimeException("Erro lendo a foto temporária", e);
+		}
+	}
+	
+	@Override
+	public void salvar(String foto) {
+		try {
+			Files.move(this.localTemporario.resolve(foto), this.local.resolve(foto));
+		} catch (IOException e) {
+			throw new RuntimeException("Erro movendo a foto para destino final", e);
+		}
+		
+		try {
+			Thumbnails.of(this.local.resolve(foto).toString()).size(40, 68).toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		} catch (IOException e) {
+			throw new RuntimeException("Erro gerando thumbnail", e);
+		}
+	}
+	
+	@Override
+	public byte[] recuperar(String nome) {
+		try {
+			return Files.readAllBytes(this.local.resolve(nome));
+			
+		} catch (IOException e) {
+			throw new RuntimeException("Erro lendo a foto", e);
+		}
+	}
 	
 	private void criarPastas() {
 		try {
@@ -71,56 +100,22 @@ private static final Logger logger = LoggerFactory.getLogger(FotoStorageLocal.cl
 		}
 	}
 	
-	
 	private String renomearArquivo(String nomeOriginal) {
-		String novoNome = UUID.randomUUID().toString()+"-"+nomeOriginal;
+		String novoNome = UUID.randomUUID().toString() + "_" + nomeOriginal;
 		
-		if(logger.isDebugEnabled()) {
-			
-			logger.debug(String.format("Nome original: %s, novo nome: %s",nomeOriginal, nomeOriginal));
-			
+		if (logger.isDebugEnabled()) {
+			logger.debug(String.format("Nome original: %s, novo nome: %s", nomeOriginal, novoNome));
 		}
+		
 		return novoNome;
-	}
-	
-	@Override
-	public byte[] recuperarFotoTemporaria(String nome) {
-		try {
-		return Files.readAllBytes(this.localTemporario.resolve(nome));
-		} catch (IOException e) {
-			throw new RuntimeException("Erro lendo a foto temporária", e);
-		}
-	}
-
-
-	@Override
-	public void salvar(String foto) {
-		try {
-			Files.move(this.localTemporario.resolve(foto), this.local.resolve(foto));
-		} catch (IOException e) {
-			
-			throw new RuntimeException("Erro movendo a foto para destino final", e);
-		}
-		
-		try {
-			Thumbnails.of(this.local.resolve(foto).toString()).size(40, 68).toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-		} catch (IOException e) {
-			throw new RuntimeException("Erro gerar Thumbnail", e);
-		}
 		
 	}
 
-
 	@Override
-	public byte[] recuperar(String nome) {
-		try {
-			return Files.readAllBytes(this.local.resolve(nome));
-			} catch (IOException e) {
-				throw new RuntimeException("Erro lendo a foto", e);
-			}
+	public byte[] recuperarThumbnail(String fotoCerveja) {//
+		// TODO Auto-generated method stub
+		return recuperar("thumbnail."+ fotoCerveja); 
 	}
-	
 
 	
-
 }

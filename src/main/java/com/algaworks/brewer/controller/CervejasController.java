@@ -62,9 +62,9 @@ public class CervejasController {
 	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result,
 							Model model, RedirectAttributes attributes) {				
 		if(result.hasErrors()) {
-			//return novo(cerveja);		
 			
-			throw new RuntimeException();
+			return novo(cerveja);		
+			
 		}		
 		 
 		cadastroCervejaService.salvar(cerveja);
