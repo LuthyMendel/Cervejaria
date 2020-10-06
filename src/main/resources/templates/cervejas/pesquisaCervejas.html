@@ -116,12 +116,11 @@
 						<th class="table-cervejas-col-valor">Valor</th>
 						<th class="table-cervejas-col-acoes"></th>								
 					</tr>
-					</thead>
-					
+					</thead>					
 					<tbody>
 						<tr th:each="cerveja : ${pagina.conteudo}">
 						<td class="text-center">
-						<img th:src="@{/fotos/thumbnail.{foto}(foto=${cerveja.fotoOuMock})}" class="img-responsive"/>	                      
+						<img th:src="@{/fotos/thumbnail.{foto}(foto=${cerveja.fotoOuMock})}" class="img-responsive"/>	                     
 						
 						                 
 							<td class="text-center" th:text="${cerveja.sku}"><td>
@@ -130,19 +129,25 @@
 							<td th:text="${cerveja.origem.descricao}"><td>
 							<td class="text-right" th:text="|R$ ${cerveja.valor}|"></td>				
 							<td class="text-center">
-								<a class="btn btn-link btn-xs" title="Editar">
+								<a class="btn btn-link btn-xs js-tooltip" title="Editar">
 									<i class="glyphicon glyphicon-pencil"></i>
 								</a>
-							<a class="btn btn-link btn-xs" title="Excluir">
-								<i class="glyphicon glyphicon-pencil"></i>
+								
+							<a class="btn btn-link btn-xs js-tooltip js-exclusao-btn" title="Excluir" href="#" 
+							
+							data:url="@{/cervejas/{codigo}(codigo=${cerveja.codigo})}"		
+												
+								 data:objeto="${cerveja.nome}">
+							<i class="glyphicon glyphicon-remove"></i>
 							</a>
+							
+							
 							<td>			
 						</tr>
 						<tr th:if="${pagina.vazio}">
 						
 							<td colspan="7"> Nenhuma cerveja Encontrada</td>
-						</tr>
-					
+						</tr>					
 					</tbody>		
 				</table>
 	</div>

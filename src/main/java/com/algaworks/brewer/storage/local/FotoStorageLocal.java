@@ -117,5 +117,17 @@ private static final Logger logger = LoggerFactory.getLogger(FotoStorageLocal.cl
 		return recuperar("thumbnail."+ fotoCerveja); 
 	}
 
+	@Override
+	public void excluir(String foto) {
+		try {
+			Files.deleteIfExists(this.local.resolve(foto));
+			Files.deleteIfExists(this.local.resolve("thumbnail."+foto));
+
+		} catch (IOException e) {
+			logger.warn(String.format("Erro Apagando Foto '%s'.Mesagem : %s", foto, e.getMessage()));
+		}
+		
+	}
+
 	
 }
