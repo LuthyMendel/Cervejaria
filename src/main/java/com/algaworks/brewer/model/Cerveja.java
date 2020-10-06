@@ -212,7 +212,7 @@ public class Cerveja {
 
 	public boolean temFoto() {
 		
-		return StringUtils.isEmpty(this.foto);
+		return !StringUtils.isEmpty(this.foto);
 	}
 	
 

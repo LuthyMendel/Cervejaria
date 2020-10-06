@@ -100,7 +100,7 @@ public class VendasController {
 
 	
 	@PostMapping(value = "/nova", params = "enviarEmail")
-	public ModelAndView emitir(Venda venda, BindingResult result, RedirectAttributes attributes, 
+	public ModelAndView enviar(Venda venda, BindingResult result, RedirectAttributes attributes, 
 			@AuthenticationPrincipal UsuarioSistema usuarioSistema) {
 		
 		validarVenda(venda, result);			
@@ -109,12 +109,13 @@ public class VendasController {
 			return nova(venda);
 		}	
 		
+		venda.setUsuario(usuarioSistema.getUsuario());
+		venda = cadastroVendaService.salvar(venda); //
+		
 		mailer.enviar(venda);
 		
-		venda.setUsuario(usuarioSistema.getUsuario());
 		
-		cadastroVendaService.salvar(venda);
-		attributes.addFlashAttribute("mensagem", "Venda Salva e email Enviado");		
+		attributes.addFlashAttribute("mensagem", String.format("Venda  %d Salva e email Enviado", venda.getCodigo()));//		
 		return new ModelAndView("redirect:/vendas/nova");
 	}
 	
